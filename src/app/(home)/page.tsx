@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 
@@ -17,7 +17,8 @@ export default function Home() {
 
   const [isReleased, setIsReleased] = useState(false);
   const [status, setStatus] = useState<StatusType>();
- 
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const dayColors: Record<number, string> & { default: string } = {
     0: "bg-gradient-to-b from-yellow-500 via-yellow-600 to-yellow-700", // Sunday
     4: "bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700", // Thursday
@@ -37,23 +38,31 @@ export default function Home() {
     const minutes = currentTime.getMinutes();
 
     const text = getStatusText(day, hours, minutes);
-    const bg = dayColors[day] || dayColors.default; 
+    const bg = dayColors[day] || dayColors.default;
 
     setIsReleased(isAllowedToDrink(day, hours));
-
     setStatus({ text, bg });
   }
 
-  function handlePlay() {
-    const audio = new Audio("latinha.mp3");
-    audio.play();
-  }
+  const handlePlay = () => {
+    if (!isPlaying) {
+      const audio = new Audio("latinha.mp3");
+
+      setIsPlaying(true);
+
+      audio.addEventListener("ended", () => {
+        setIsPlaying(false);
+      });
+
+      audio.play();
+    }
+  };
 
   return (
     <div className={cn("h-screen", status?.bg)}>
       {isReleased && <Confetti width={width} height={height} />}
 
-      <section className="container mx-auto px-8 flex justify-center items-center h-full">
+      <section className="container select-none mx-auto px-8 flex justify-center items-center h-full">
         <div className="flex flex-col items-center text-center">
           <span className="text-3xl sm:text-5xl md:text-6xl text-white font-light tracking-tighter mb-2 sm:mb-4 md:mb-6">
             JÁ TÁ PODENDO <br />
