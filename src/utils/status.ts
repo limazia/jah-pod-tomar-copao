@@ -1,5 +1,3 @@
-// utils/status.ts
-
 type DayKey = "WEEKDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY";
 
 const DRINK_TIMES: Record<DayKey, { START: number; END: number }> = {
@@ -38,37 +36,9 @@ const statusTexts: Record<DayKey, string[]> = {
   ],
 };
 
-export const dayColors: Record<DayKey, string> = {
-  //WEEKDAY: "bg-red-500",
-  //THURSDAY: "bg-yellow-500",
-  //FRIDAY: "bg-green-600",
-  //SATURDAY: "bg-green-600",
-  //SUNDAY: "bg-green-300",
-  WEEKDAY: "#ef4444",
-  THURSDAY: "#eab308",
-  FRIDAY: "#16a34a",
-  SATURDAY: "#16a34a",
-  SUNDAY: "#86efac",
-};
-
 const getRandomText = (texts: string[]) => {
   const randomIndex = Math.floor(Math.random() * texts.length);
   return texts[randomIndex];
-};
-
-export const getDayColor = (day: number): string => {
-  switch (day) {
-    case 0: // Sunday
-      return dayColors.SUNDAY;
-    case 4: // Thursday
-      return dayColors.THURSDAY;
-    case 5: // Friday
-      return dayColors.FRIDAY;
-    case 6: // Saturday
-      return dayColors.SATURDAY;
-    default: // Monday, Tuesday, Wednesday
-      return dayColors.WEEKDAY;
-  }
 };
 
 export const isAllowedToDrink = (day: number, hours: number): boolean => {
@@ -105,5 +75,6 @@ export const getStatusText = (
 ): string => {
   const key = getDayKey(day);
   const texts = statusTexts[key];
+
   return getRandomText(texts);
 };
