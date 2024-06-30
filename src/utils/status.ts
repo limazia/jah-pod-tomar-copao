@@ -1,13 +1,5 @@
 type DayKey = "WEEKDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY";
 
-const DRINK_TIMES: Record<DayKey, { START: number; END: number }> = {
-  WEEKDAY: { START: 0, END: 0 }, // No drinking allowed
-  THURSDAY: { START: 0, END: 23 }, // Drinking allowed all day
-  FRIDAY: { START: 11, END: 6 }, // Drinking allowed from 11:00 to 6:00 next day
-  SATURDAY: { START: 11, END: 6 }, // Drinking allowed from 11:00 to 6:00 next day
-  SUNDAY: { START: 12, END: 24 }, // Drinking allowed from 12:00 to 00:00
-};
-
 const statusTexts: Record<DayKey, string[]> = {
   WEEKDAY: [
     "Ainda não pode beber! 🚫🍺",
@@ -42,16 +34,6 @@ const getRandomText = (texts: string[]) => {
   return texts[randomIndex];
 };
 
-export const isAllowedToDrink = (day: number, hours: number): boolean => {
-  const { START, END } = DRINK_TIMES[getDayKey(day)];
-  
-  if (START === 0 && END === 0) {
-    return false; // No drinking allowed
-  }
-
-  return hours >= START || hours < END;
-};
-
 const getDayKey = (day: number): DayKey => {
   switch (day) {
     case 0: // Sunday
@@ -71,11 +53,13 @@ const getDayKey = (day: number): DayKey => {
   }
 };
 
-export const getStatusText = (
-  day: number,
-  hours: number,
-  minutes: number
-): string => {
+export const isAllowedToDrink = (day: number): boolean => {
+  const allowedDays = [0, 4, 5, 6];
+  
+  return allowedDays.includes(day);
+};
+
+export const getStatusText = (day: number): string => {
   const key = getDayKey(day);
   const texts = statusTexts[key];
 

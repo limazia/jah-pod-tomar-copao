@@ -34,13 +34,11 @@ export default function Home() {
   function getStatus() {
     const currentTime = new Date();
     const day = currentTime.getDay();
-    const hours = currentTime.getHours();
-    const minutes = currentTime.getMinutes();
 
-    const text = getStatusText(day, hours, minutes);
+    const text = getStatusText(day);
     const bg = dayColors[day] || dayColors.default;
 
-    setIsReleased(isAllowedToDrink(day, hours));
+    setIsReleased(isAllowedToDrink(day));
     setStatus({ text, bg });
   }
 
