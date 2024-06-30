@@ -3,8 +3,6 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import { Metadata } from "next";
 
-import { ClientOnly } from "@/components/client-only";
-
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
@@ -31,9 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={poppins.variable} suppressHydrationWarning>
-      <body className="antialiased">
-        <ClientOnly>{children}</ClientOnly>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
