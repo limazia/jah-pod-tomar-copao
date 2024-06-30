@@ -38,14 +38,17 @@ const statusTexts: Record<DayKey, string[]> = {
 
 const getRandomText = (texts: string[]) => {
   const randomIndex = Math.floor(Math.random() * texts.length);
+
   return texts[randomIndex];
 };
 
 export const isAllowedToDrink = (day: number, hours: number): boolean => {
   const { START, END } = DRINK_TIMES[getDayKey(day)];
+  
   if (START === 0 && END === 0) {
     return false; // No drinking allowed
   }
+
   return hours >= START || hours < END;
 };
 

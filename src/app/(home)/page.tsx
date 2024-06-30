@@ -8,7 +8,7 @@ import { getStatusText, isAllowedToDrink } from "@/utils/status";
 import { cn } from "@/utils/cn";
 
 type StatusType = {
-  text: string | undefined;
+  text: string;
   bg: string;
 };
 
@@ -16,7 +16,7 @@ export default function Home() {
   const { width, height } = useWindowSize();
 
   const [isReleased, setIsReleased] = useState(false);
-  const [status, setStatus] = useState<StatusType>({ text: undefined, bg: "" });
+  const [status, setStatus] = useState<StatusType>();
  
   const dayColors: Record<number, string> & { default: string } = {
     0: "bg-gradient-to-b from-yellow-500 via-yellow-600 to-yellow-700", // Sunday
@@ -65,7 +65,7 @@ export default function Home() {
             TOMAR COPÃO?
           </span>
           <span className="text-2xl sm:text-2xl md:text-4xl font-bold mt-2 sm:mt-4 md:mt-6 max-w-screen-lg text-white">
-            {status.text}
+            {status?.text}
           </span>
         </div>
       </section>
