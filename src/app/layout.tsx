@@ -1,39 +1,60 @@
 import "./globals.css";
 
+import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import { Metadata } from "next";
+
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/utils/site";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Jah pode tomar copão?",
-  description: "Será que já chegou a hora de abrir uma latinha? Descubra",
-  keywords:
-    "horário de beber, copão, cerveja, vodka, whisky, gin, drink, bar, boteco, balada, festa, happy hour, beber, beba com moderação, beba responsavelmente, beba com responsa, beba com responsabilidade",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  category: "entertainment",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    siteName: "Jah pode tomar copão?",
-    title: "Jah pode tomar copão?",
-    description: "Será que já chegou a hora de abrir uma latinha? Descubra",
-    url: "https://jah-pod-tomar-copao.vercel.app/",
-    images: [
-      {
-        url: "drink.png",
-        width: 512,
-        height: 512,
-        alt: "drink img",
-      },
-    ],
-    locale: "pt_BR",
     type: "website",
+    locale: "pt_BR",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  alternateName: "Já tá podendo tomar copão?",
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  inLanguage: "pt-BR",
 };
 
 export default function RootLayout({
@@ -42,8 +63,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={poppins.variable} suppressHydrationWarning>
-      <body className="antialiased">{children}</body>
+    <html lang="pt-BR" className={poppins.variable}>
+      <body className="font-sans antialiased">
+        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </body>
     </html>
   );
 }
